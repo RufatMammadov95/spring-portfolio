@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-4">
+
+        <h1>My Investments</h1>
+
+        <p>Remaining Fund: $<span th:text="${remaining}"></span></p>
+
+        <!-- SORT -->
+        <a href="/investments/?sort=amountAsc">Amount ↑</a>
+        <a href="/investments/?sort=amountDesc">Amount ↓</a>
+        <a href="/investments/?sort=nameAsc">Name ↑</a>
+        <a href="/investments/?sort=nameDesc">Name ↓</a>
+
+        <table class="table mt-3">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Action</th>
+            </tr>
+
+            <tr th:each="inv : ${investments}">
+                <td th:text="${inv.id}"></td>
+                <td th:text="${inv.name}"></td>
+                <td th:text="${inv.amount}"></td>
+                <td>
+                    <a th:href="@{/investments/edit/{id}(id=${inv.id})}" class="btn btn-sm btn-warning">Edit</a>
+                </td>
+            </tr>
+        </table>
+
+        <!-- ADD -->
+        <h3>Add Investment</h3>
+        <form th:action="@{/investments}" method="post">
+            <input name="name" class="form-control mb-2" placeholder="Name">
+            <input name="amount" type="number" class="form-control mb-2" placeholder="Amount">
+            <button class="btn btn-primary">Add</button>
+        </form>
+
+        <!-- ADD TO FUND -->
+        <h3>Add to Fund</h3>
+        <form th:action="@{/investments/fund}" method="post">
+            <input name="amount" type="number" class="form-control mb-2" placeholder="Amount">
+            <button class="btn btn-success">Add to Fund</button>
+        </form>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h2>Edit Investment</h2>
+
+<form th:action="@{/investments/update}" method="post">
+    <input type="hidden" name="id" th:value="${investment.id}">
+    
+    <input name="name" th:value="${investment.name}" class="form-control mb-2">
+    
+    <input name="amount" type="number" th:value="${investment.amount}" class="form-control mb-2">
+    
+    <button class="btn btn-primary">Update</button>
+</form>
+
+</body>
+</html>
