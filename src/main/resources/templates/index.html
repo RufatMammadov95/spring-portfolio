@@ -14,13 +14,14 @@
         <p>Remaining Fund: $<span th:text="${remaining}"></span></p>
 
         <!-- SORT -->
-        <a href="/investments/?sort=amountAsc">Amount ↑</a>
-        <a href="/investments/?sort=amountDesc">Amount ↓</a>
-        <a href="/investments/?sort=nameAsc">Name ↑</a>
-        <a href="/investments/?sort=nameDesc">Name ↓</a>
+        <a href="/investments/?sort=amountAsc" class="me-2">Amount ↑</a>
+        <a href="/investments/?sort=amountDesc" class="me-2">Amount ↓</a>
+        <a href="/investments/?sort=nameAsc" class="me-2">Name ↑</a>
+        <a href="/investments/?sort=nameDesc" class="me-2">Name ↓</a>
 
         <table class="table mt-3">
             <tr>
+            <a th:href="@{/investments/}" class="btn btn-primary">Go to Investments</a>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Amount</th>
@@ -29,10 +30,13 @@
 
             <tr th:each="inv : ${investments}">
                 <td th:text="${inv.id}"></td>
-                <td th:text="${inv.name}"></td>
+                <td>
+                    <a th:href="@{/investments/{id}(id=${inv.id})}" th:text="${inv.name}"></a>
+                </td>
                 <td th:text="${inv.amount}"></td>
                 <td>
                     <a th:href="@{/investments/edit/{id}(id=${inv.id})}" class="btn btn-sm btn-warning">Edit</a>
+                    <a th:href="@{/investments/{id}(id=${inv.id})}" class="btn btn-sm btn-primary">View Details</a>
                 </td>
             </tr>
         </table>
@@ -42,6 +46,7 @@
         <form th:action="@{/investments}" method="post">
             <input name="name" class="form-control mb-2" placeholder="Name">
             <input name="amount" type="number" class="form-control mb-2" placeholder="Amount">
+            <input name="description" class="form-control mb-2" placeholder="Description (optional)">
             <button class="btn btn-primary">Add</button>
         </form>
 

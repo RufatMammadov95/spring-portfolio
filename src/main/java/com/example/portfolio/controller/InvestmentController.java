@@ -17,9 +17,9 @@ public class InvestmentController {
     @Autowired
     private InvestmentService service;
 
+    // LIST PAGE
     @GetMapping("/")
     public String home(@RequestParam(required = false) String sort, Model model) {
-
         List<Investment> investments = service.getAll();
 
         if (sort != null) {
@@ -42,14 +42,15 @@ public class InvestmentController {
         model.addAttribute("investments", investments);
         model.addAttribute("remaining", service.getRemainingFund());
 
-        return "index";
+        return "index"; // index.html list page
     }
 
     // ADD INVESTMENT
     @PostMapping
     public String add(@RequestParam String name,
-                      @RequestParam double amount) {
-        service.save(new Investment(name, amount));
+                      @RequestParam double amount,
+                      @RequestParam(required = false) String description) {
+        service.save(new Investment(name, amount, description));
         return "redirect:/investments/";
     }
 
@@ -64,22 +65,35 @@ public class InvestmentController {
     @GetMapping("/edit/{id}")
     public String editPage(@PathVariable Long id, Model model) {
         model.addAttribute("investment", service.getById(id));
-        return "edit";
+        return "edit"; // edit.html
     }
 
     // UPDATE ACTION
     @PostMapping("/update")
     public String update(@RequestParam Long id,
                          @RequestParam String name,
-                         @RequestParam double amount) {
+                         @RequestParam double amount,
+                         @RequestParam(required = false) String description) {
 
         Investment inv = service.getById(id);
         if (inv != null) {
             inv.setName(name);
             inv.setAmount(amount);
+            inv.setDescription(description);
             service.save(inv);
         }
 
         return "redirect:/investments/";
+    }
+
+    // DETAIL PAGE
+    @GetMapping("/{id}")
+    public String detailPage(@PathVariable Long id, Model model) {
+        Investment inv = service.getById(id);
+        if (inv == null) {
+            return "redirect:/investments/";
+        }
+        model.addAttribute("investment", inv);
+        return "investment-detail"; // investment-detail.html
     }
 }
