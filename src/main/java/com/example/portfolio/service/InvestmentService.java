@@ -46,4 +46,7 @@ public class InvestmentService {
     public void addToFund(double amount) {
         totalFund += amount;
     }
+    public void deleteById(Long id) {
+        repo.deleteById(id);
+    }
 }

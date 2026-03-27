@@ -35,9 +35,13 @@
                 </td>
                 <td th:text="${inv.amount}"></td>
                 <td>
-                    <a th:href="@{/investments/edit/{id}(id=${inv.id})}" class="btn btn-sm btn-warning">Edit</a>
-                    <a th:href="@{/investments/{id}(id=${inv.id})}" class="btn btn-sm btn-primary">View Details</a>
-                </td>
+   					 <a th:href="@{/investments/edit/{id}(id=${inv.id})}" class="btn btn-sm btn-warning">Edit</a>
+    				 <a th:href="@{/investments/{id}(id=${inv.id})}" class="btn btn-sm btn-primary">View Details</a>
+
+    				<form th:action="@{/investments/delete/{id}(id=${inv.id})}" method="post" style="display:inline;">
+        					<button type="submit" class="btn btn-sm btn-danger">Delete</button>
+    				</form>
+				</td>
             </tr>
         </table>
 

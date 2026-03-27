@@ -85,6 +85,15 @@ public class InvestmentController {
 
         return "redirect:/investments/";
     }
+    
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        Investment inv = service.getById(id);
+        if (inv != null) {
+            service.deleteById(id);
+        }
+        return "redirect:/investments/";
+    }
 
     // DETAIL PAGE
     @GetMapping("/{id}")
